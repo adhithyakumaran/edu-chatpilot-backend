@@ -1,0 +1,71 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  password  String
+  role      String   @default("STUDENT") // STUDENT, ADMIN
+  batch     String?  // e.g. "JAN_2026"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  
+  payment   Payment?
+  messages  MentorMessage[]
+}
+
+model MentorMessage {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  message   String
+  sender    String   // 'USER' or 'ADMIN'
+  createdAt DateTime @default(now())
+  read      Boolean  @default(false)
+}
+
+model Payment {
+  id            String   @id @default(uuid())
+  amount        Float
+  currency      String   @default("INR")
+  status        String   @default("PENDING") // PENDING, COMPLETED, FAILED
+  razorpayId    String?  @unique
+  userId        String   @unique
+  user          User     @relation(fields: [userId], references: [id])
+  createdAt     DateTime @default(now())
+}
+
+model Session {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  date        DateTime
+  meetLink    String?
+  recording   String?
+  batch       String
+  createdAt   DateTime @default(now())
+}
+
+model Resource {
+  id          String   @id @default(uuid())
+  title       String
+  url         String
+  type        String   // PDF, VIDEO, LINK
+  batch       String
+  createdAt   DateTime @default(now())
+}
+
+model Notification {
+  id        String   @id @default(uuid())
+  title     String
+  message   String
+  courseId  String?
+  createdAt DateTime @default(now())
+}
