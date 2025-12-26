@@ -1,4 +1,4 @@
-import express, { Request, Response } from 'express';
+﻿import express, { Request, Response } from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import prisma from './db';
@@ -29,9 +29,14 @@ app.use('/api/notifications', notificationRoutes);
 import mentorRoutes from './routes/mentor.routes';
 app.use('/api/mentor', mentorRoutes);
 
+
+// Uptime Endpoint
+app.get('/ping', (req: Request, res: Response) => {
+    res.status(200).send('Pong ðŸ“');
+});
 // Health Check
 app.get('/', (req: Request, res: Response) => {
-    res.send('ChatPilot Education API is Running 🚀');
+    res.send('ChatPilot Education API is Running ðŸš€');
 });
 
 // Database Check
