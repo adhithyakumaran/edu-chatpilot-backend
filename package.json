@@ -1,4 +1,4 @@
-{
+﻿{
     "name":  "server",
     "version":  "1.0.0",
     "description":  "",
@@ -8,7 +8,7 @@
                     "dev":  "nodemon --exec ts-node src/index.ts",
                     "build":  "tsc \u0026\u0026 node node_modules/prisma/build/index.js generate",
                     "postinstall":  "node node_modules/prisma/build/index.js generate",
-                    "start":  "node dist/index.js"
+                    "start":  "npx prisma db push \u0026\u0026 node dist/index.js"
                 },
     "keywords":  [
 
