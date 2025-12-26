@@ -6,9 +6,9 @@
     "scripts":  {
                     "test":  "echo \"Error: no test specified\" \u0026\u0026 exit 1",
                     "dev":  "nodemon --exec ts-node src/index.ts",
-                    "build":  "tsc \u0026\u0026 prisma generate",
+                    "build":  "tsc \u0026\u0026 node node_modules/prisma/build/index.js generate",
                     "start":  "node dist/index.js",
-                    "postinstall":  "prisma generate"
+                    "postinstall":  "node node_modules/prisma/build/index.js generate"
                 },
     "keywords":  [
 
