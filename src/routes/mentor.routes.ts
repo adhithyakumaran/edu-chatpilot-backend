@@ -60,4 +60,18 @@ router.get('/admin/inbox', async (req, res) => {
     }
 });
 
+// DELETE Message
+router.delete('/:messageId', async (req, res) => {
+    const { messageId } = req.params;
+    try {
+        await prisma.mentorMessage.delete({
+            where: { id: messageId }
+        });
+        res.json({ success: true });
+    } catch (error) {
+        console.error("Delete Error", error);
+        res.status(500).json({ error: 'Failed to delete message' });
+    }
+});
+
 export default router;

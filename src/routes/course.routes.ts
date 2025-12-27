@@ -69,4 +69,16 @@ router.post('/:courseId/enroll', async (req, res) => {
     }
 });
 
+// DELETE /api/courses/:id
+// Delete a course
+router.delete('/:id', async (req, res) => {
+    try {
+        const result = await db.collection('courses').doc(req.params.id).delete();
+        res.json({ success: true, timestamp: result.writeTime });
+    } catch (error) {
+        console.error('Error deleting course:', error);
+        res.status(500).json({ error: 'Failed to delete course' });
+    }
+});
+
 export default router;
