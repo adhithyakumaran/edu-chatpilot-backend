@@ -29,7 +29,8 @@ router.post('/send', async (req, res) => {
             create: {
                 id: userId,
                 email: 'sync_pending@chatpilot.com', // Placeholder if we don't have it here
-                name: 'Student'
+                name: 'Student',
+                password: 'firebase-authenticated' // Dummy password as auth is handled by Firebase
             }
         });
 
