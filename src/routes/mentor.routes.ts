@@ -22,6 +22,17 @@ router.get('/:userId', async (req, res) => {
 router.post('/send', async (req, res) => {
     const { userId, message, sender } = req.body;
     try {
+        // UPSERT User first to ensure they exist in SQL DB (sync with Firebase)
+        await prisma.user.upsert({
+            where: { id: userId },
+            update: {},
+            create: {
+                id: userId,
+                email: 'sync_pending@chatpilot.com', // Placeholder if we don't have it here
+                name: 'Student'
+            }
+        });
+
         const newMessage = await prisma.mentorMessage.create({
             data: {
                 userId,
