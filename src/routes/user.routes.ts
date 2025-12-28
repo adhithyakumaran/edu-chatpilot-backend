@@ -6,7 +6,7 @@ const router = express.Router();
 // POST /api/user/profile
 // Saves academic details and creates/updates the user record
 router.post('/profile', async (req, res) => {
-    const { userId, email, name, photoUrl, academic } = req.body;
+    const { userId, email, name, photoUrl, academic, provider } = req.body;
 
     if (!userId || !email) {
         res.status(400).json({ error: 'Missing required fields: userId, email' });
@@ -22,6 +22,7 @@ router.post('/profile', async (req, res) => {
             email,
             name: name || '',
             photoUrl: photoUrl || '',
+            provider: provider || 'unknown',
             academic: academic || {}, // { college, degree, year, branch, cgpa }
             lastLogin: new Date(),
             // Set defaults if not present
