@@ -36,6 +36,25 @@ router.post('/profile', async (req, res) => {
     }
 });
 
+// GET /api/user/admin/all
+router.get('/admin/all', async (req, res) => {
+    try {
+        const snapshot = await db.collection('users').get();
+        const users = snapshot.docs.map(doc => {
+            const data = doc.data();
+            // Convert Firestore timestamps to dates
+            return {
+                ...data,
+                lastLogin: data.lastLogin?.toDate ? data.lastLogin.toDate() : data.lastLogin
+            };
+        });
+        res.json(users);
+    } catch (error) {
+        console.error("Error fetching students:", error);
+        res.status(500).json({ error: 'Failed to fetch students' });
+    }
+});
+
 // GET /api/user/:userId
 router.get('/:userId', async (req, res) => {
     try {
